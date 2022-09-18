@@ -1,28 +1,30 @@
+import { GitUserType } from "../../type/type"
 import * as actionTypes from "../constants/actionTypes"
 import { initialState } from "../constants/actionTypes"
 
+import { HistoryState, HistoryAction } from "../type/type"
+
 const reducer = (
-    state: ArticleState = initialState,
-    action: ArticleAction
-  ): ArticleState => {
+    state: HistoryState = initialState,
+    action: HistoryAction
+  ): HistoryState => {
     switch (action.type) {
-      case actionTypes.ADD_ARTICLE:
-        const newArticle: IArticle = {
-          id: Math.random(), // not really unique
-          title: action.article.title,
-          body: action.article.body,
-        }
+      case actionTypes.SEARCH_HISTORY:
+        const history: GitUserType = action.history;
+        const searchName: string = action.searchName;
+
+        let userIds: any = {};        
+        let save_data = [history, ...state.history].reduce((items:any, item:GitUserType)=>{
+          if(!userIds[item.id]){
+            userIds[item.id] = true;
+            return [...items, item];
+          } else return items;
+        }, []);
+
         return {
           ...state,
-          articles: state.articles.concat(newArticle),
-        }
-      case actionTypes.REMOVE_ARTICLE:
-        const updatedArticles: IArticle[] = state.articles.filter(
-          article => article.id !== action.article.id
-        )
-        return {
-          ...state,
-          articles: updatedArticles,
+          history: save_data,
+          searchName: searchName
         }
     }
     return state

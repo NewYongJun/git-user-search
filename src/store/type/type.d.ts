@@ -1,16 +1,20 @@
-interface IArticle {
-    id: number
-    title: string
-    body: string
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+
+import {GitUserType} from '../../type/type'
+
+  type HistoryState = {
+    history: GitUserType[]
+    searchName: string
   }
   
-  type ArticleState = {
-    articles: IArticle[]
-  }
-  
-  type ArticleAction = {
+  type HistoryAction = {
     type: string
-    article: IArticle
+    history: GitUserType
+    searchName: string
   }
   
-  type DispatchType = (args: ArticleAction) => ArticleAction
+  type DispatchType = (args: HistoryAction) => HistoryAction
+
+
+  type AppDispatch = ThunkDispatch<HistoryState, any, AnyAction>; 

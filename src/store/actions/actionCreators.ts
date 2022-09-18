@@ -1,23 +1,19 @@
 import * as actionTypes from "../constants/actionTypes"
 
-export function addArticle(article: IArticle) {
-  const action: ArticleAction = {
-    type: actionTypes.ADD_ARTICLE,
-    article,
+import { HistoryAction, DispatchType } from "../type/type"
+import { GitUserType } from "../../type/type"
+
+export function SaveHistory(history: GitUserType, name: string) {
+  const action: HistoryAction = {
+    type: actionTypes.SEARCH_HISTORY,
+    history: history,
+    searchName: name
   }
 
   return simulateHttpRequest(action)
 }
 
-export function removeArticle(article: IArticle) {
-  const action: ArticleAction = {
-    type: actionTypes.REMOVE_ARTICLE,
-    article,
-  }
-  return simulateHttpRequest(action)
-}
-
-export function simulateHttpRequest(action: ArticleAction) {
+export function simulateHttpRequest(action: HistoryAction) {
   return (dispatch: DispatchType) => {
     setTimeout(() => {
       dispatch(action)
